@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suprise</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container-fluid bg-light-subtle d-flex flex-wrap flex-column justify-content-center align-items-center"
+        style="height: 100vh;">
+
+        <img src="img/imageedit_2_4110624191.png" class="img-fluid" alt="ring image"
+            style="width: 300px; height: 300px;">
+        <p class="click-me fw-light " style="font-size: 36px;" onclick=start() id="clickButton">Click Me ;&rpar;</p>
+
+        <div id="text" class="text-break px-5" style="font-size: 24px"></div>
+
+        <audio class="d-none" id="audioPlayer" controls>
+            <source src="audio/audio.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        const strings = [
+            "Hello Aya!",
+            "How have you been doing lately?",
+            "I made this small website as a gift for you <3",
+            "This gift is supposed to represent what I feel about you ;)",
+            "And how else can I represent my feelings for you...",
+            "...with a SONG!!!!!",
+            "There's this song that I have been listening to recently...",
+            "and it always reminds me of you esra7a.",
+            "So, I want you to listen to it and tell me your thoughts <3",
+            ""
+        ];
+
+        const textElement = document.getElementById('text');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        function typeWriter(i) {
+            if (i < strings.length) {
+                let j = 0;
+                const typingInterval = setInterval(() => {
+                    if (j <= strings[i].length) {
+                        textElement.innerHTML = strings[i].slice(0, j);
+                        j++;
+                    } else {
+                        clearInterval(typingInterval);
+                        if (i < strings.length - 1) {
+                            setTimeout(() => {
+                                removeLetters(i, strings[i].length - 1);
+                            }, 1000); // Delay before removing letters
+                        } else {
+                            showAudioPlayer();
+                        }
+                    }
+                }, 80); // Adjust the typing speed
+            }
+        }
+
+        function removeLetters(i, index) {
+            const removingInterval = setInterval(() => {
+                if (index >= 0) {
+                    textElement.innerHTML = strings[i].slice(0, index);
+                    index--;
+                } else {
+                    clearInterval(removingInterval);
+                    setTimeout(() => {
+                        typeWriter(i + 1);
+                    }, 1000); // Delay before typing the next string
+                }
+            }, 30); // Adjust the speed of removing letters
+        }
+
+        function showAudioPlayer() {
+            audioPlayer.classList.remove("d-none");
+        }
+
+        function start() {
+            clickButton.classList.add("d-none");
+            typeWriter(0);
+            
+        }
+    </script>
+</body>
+
+</html>
